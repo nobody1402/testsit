@@ -5,6 +5,9 @@
   <title>فروشنده ارمون - اکسسوری بار کافه | کاسبچی</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    body {
+      background-color: #fdfcfb;
+    }
     .vendor-header {
       padding-top: 6rem;
       text-align: center;
@@ -104,6 +107,34 @@
       margin: 2rem auto;
       max-width: 700px;
     }
+    .compare-bar, .history-table, .cross-sell {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .compare-bar div, .cross-sell div {
+      margin-bottom: 1rem;
+    }
+    .cross-sell img {
+      width: 100px;
+      border-radius: 6px;
+      margin-left: 1rem;
+    }
+    .cross-sell-item {
+      display: flex;
+      align-items: center;
+    }
+    .history-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .history-table th, .history-table td {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -118,20 +149,16 @@
 
     <div class="stats-grid">
       <div class="stat-item">
-        <strong>۹۲٪</strong>
-        رضایت مشتری
+        <strong>۹۲٪</strong> رضایت مشتری
       </div>
       <div class="stat-item">
-        <strong>۲ روز</strong>
-        زمان ارسال میانگین
+        <strong>۲ روز</strong> زمان ارسال میانگین
       </div>
       <div class="stat-item">
-        <strong>۴.۷ از ۵</strong>
-        امتیاز کلی
+        <strong>۴.۷ از ۵</strong> امتیاز کلی
       </div>
       <div class="stat-item">
-        <strong>۵۸ سفارش</strong>
-        در ۶ ماه گذشته
+        <strong>۵۸ سفارش</strong> در ۶ ماه گذشته
       </div>
     </div>
   </section>
@@ -146,9 +173,9 @@
   </div>
 
   <section class="blog-post">
-    <!-- محصول نمونه -->
+    <!-- محصولات نمونه -->
     <div class="product-card">
-      <img class="blog-img" src="https://armooncoffee.com/wp-content/uploads/2021/07/تمپر-قهوه-استیل-58.4-میلیمتر-ارگونومیک-1.jpg" alt="تمپر">
+      <img class="blog-img" src="assets/images/vendor-armoon-1.jpg" alt="تمپر">
       <h2>تمپر قهوه استیل ۵۸.۴mm</h2>
       <ul>
         <li><strong>قیمت:</strong> ۸۹۰٬۰۰۰ تومان</li>
@@ -156,34 +183,100 @@
         <li><strong>ارسال:</strong> تا ۲ روز کاری</li>
         <li><strong>توضیحات:</strong> طراحی حرفه‌ای، ضد زنگ، مناسب اسپرسوسازهای صنعتی</li>
       </ul>
-
       <div class="purchase-box">
-        <p>افزودن به سبد خرید</p>
-        <input type="number" value="1" min="1" max="5" style="padding: 0.5rem; margin: 0.5rem;">
+        <input type="number" value="1" min="1" max="5">
         <button class="btn btn-primary">درخواست خرید</button>
-        <p>🚚 اگر تا ساعت ۱۲ سفارش دهید، امروز ارسال می‌شود</p>
       </div>
-
       <div class="ratings">
-        <p>امتیاز کاربران:</p>
-        <span>⭐⭐⭐⭐⭐</span> (۱۵ رای)
+        ⭐⭐⭐⭐⭐ (۱۵ رای)
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="blog-img" src="assets/images/vendor-armoon-2.jpg" alt="پاد تمپر">
+      <h2>پاد تمپر سیلیکونی</h2>
+      <ul>
+        <li><strong>قیمت:</strong> ۴۹۰٬۰۰۰ تومان</li>
+        <li><strong>موجودی:</strong> ۸ عدد</li>
+        <li><strong>ارسال:</strong> ۱ روز کاری</li>
+        <li><strong>توضیحات:</strong> ضد لغزش، مقاوم در برابر حرارت بالا</li>
+      </ul>
+      <div class="purchase-box">
+        <input type="number" value="1" min="1" max="8">
+        <button class="btn btn-primary">درخواست خرید</button>
+      </div>
+      <div class="ratings">
+        ⭐⭐⭐⭐☆ (۱۰ رای)
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="blog-img" src="assets/images/vendor-armoon-3.jpg" alt="فرچه تمیزکاری">
+      <h2>فرچه اسپرسو مخزن‌دار</h2>
+      <ul>
+        <li><strong>قیمت:</strong> ۲۵۰٬۰۰۰ تومان</li>
+        <li><strong>موجودی:</strong> ۱۰ عدد</li>
+        <li><strong>ارسال:</strong> ۲ روز کاری</li>
+        <li><strong>توضیحات:</strong> مخزن شوینده دار، برس نرم، دسته ضد لغزش</li>
+      </ul>
+      <div class="purchase-box">
+        <input type="number" value="1" min="1" max="10">
+        <button class="btn btn-primary">درخواست خرید</button>
+      </div>
+      <div class="ratings">
+        ⭐⭐⭐⭐☆ (۸ رای)
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="blog-img" src="assets/images/vendor-armoon-4.jpg" alt="استند تمپر">
+      <h2>استند تمپر چوبی</h2>
+      <ul>
+        <li><strong>قیمت:</strong> ۳۲۰٬۰۰۰ تومان</li>
+        <li><strong>موجودی:</strong> ۳ عدد</li>
+        <li><strong>ارسال:</strong> ۱ تا ۲ روز کاری</li>
+        <li><strong>توضیحات:</strong> طراحی کلاسیک، نگهدارنده ایمن تمپر</li>
+      </ul>
+      <div class="purchase-box">
+        <input type="number" value="1" min="1" max="3">
+        <button class="btn btn-primary">درخواست خرید</button>
+      </div>
+      <div class="ratings">
+        ⭐⭐⭐⭐⭐ (۱۲ رای)
       </div>
     </div>
   </section>
 
+  <div class="compare-bar">
+    <h3>پیشنهاد مشابه از فروشنده دیگر</h3>
+    <p>پاد تمپر مشابه توسط فروشنده X با قیمت ۴۷۰٬۰۰۰ تومان و ارسال ۳ روزه</p>
+    <button class="btn btn-secondary">افزودن به لیست مقایسه</button>
+  </div>
+
+  <div class="cross-sell">
+    <h3>محصولات مکمل پیشنهادی</h3>
+    <div class="cross-sell-item">
+      <img src="assets/images/vendor-armoon-4.jpg" alt="استند">
+      <div>
+        <strong>استند تمپر چوبی</strong>
+        <p>مناسب برای استفاده کنار تمپر</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="history-table">
+    <h3>سابقه سفارش موفق</h3>
+    <table>
+      <tr><th>تاریخ</th><th>محصول</th><th>امتیاز مشتری</th></tr>
+      <tr><td>۱۴۰۳/۰۲/۱۲</td><td>تمپر استیل</td><td>⭐⭐⭐⭐⭐</td></tr>
+      <tr><td>۱۴۰۳/۰۲/۱۰</td><td>پاد تمپر</td><td>⭐⭐⭐⭐</td></tr>
+    </table>
+  </div>
+
   <div class="support-icons">
-    <div>
-      <img src="assets/images/compare-delivery.png" alt="ارسال" width="48">
-      <p>ارسال سریع</p>
-    </div>
-    <div>
-      <img src="assets/images/compare-quality.png" alt="کیفیت" width="48">
-      <p>تضمین کیفیت</p>
-    </div>
-    <div>
-      <img src="assets/images/compare-support.png" alt="پشتیبانی" width="48">
-      <p>پشتیبانی کامل</p>
-    </div>
+    <div><img src="assets/images/compare-delivery.png" width="48"><p>ارسال سریع</p></div>
+    <div><img src="assets/images/compare-quality.png" width="48"><p>تضمین کیفیت</p></div>
+    <div><img src="assets/images/compare-support.png" width="48"><p>پشتیبانی کامل</p></div>
   </div>
 
   <div class="faq">
