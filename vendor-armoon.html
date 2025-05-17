@@ -9,34 +9,35 @@
   <style>
     body { font-family: 'Vazirmatn', sans-serif; }
     .toast { position: fixed; bottom: 20px; right: 20px; padding: 12px 24px; border-radius: 8px; color: white; z-index: 1000; transition: opacity 0.5s; }
-    .toast.success { background-color: #10b981; }
-    .toast.error { background-color: #ef4444; }
+    .toast.success { background-color: #047857; }
+    .toast.error { background-color: #b91c1c; }
     .blog-img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
+    .product-card { transition: transform 0.3s ease; }
+    .product-card:hover { transform: scale(1.05); }
   </style>
 </head>
 <body class="bg-white">
   <div class="container mx-auto p-4">
     <!-- سربرگ -->
-    <header class="bg-white shadow-md rounded-lg p-6 mb-6">
-      <h1 class="text-3xl font-bold text-gray-800">کاسبچی</h1>
-      <div class="flex justify-between items-center mt-4">
-        <div>
-          <span class="text-lg font-semibold text-gray-700">تأمین‌کننده شماره ۱</span>
-          <span class="text-sm text-green-600">تأییدشده توسط کاسبچی | فروشنده ویژه ⭐</span>
-        </div>
-        <div class="text-sm text-gray-600">
-          <p>۹۲٪ رضایت مشتری</p>
-          <p>۲ روز زمان ارسال میانگین</p>
-          <p>۴.۷ از ۵ امتیاز کلی</p>
-          <p>۵۸ سفارش در ۶ ماه گذشته</p>
-        </div>
+    <header class="bg-white shadow-md rounded-lg p-6 mb-6 flex items-center justify-between">
+      <div class="flex items-center">
+        <img src="assets/images/logo-kasebchi.png" alt="لوگو کاسبچی" class="h-12 mr-4">
+        <h1 class="text-3xl font-bold text-gray-800">کاسبچی</h1>
+      </div>
+      <div class="text-sm text-gray-600 text-right">
+        <p class="font-semibold text-lg">تأمین‌کننده شماره ۱</p>
+        <p class="text-green-600">تأییدشده توسط کاسبچی | فروشنده ویژه ⭐</p>
+        <p>۹۲٪ رضایت مشتری</p>
+        <p>۲ روز زمان ارسال میانگین</p>
+        <p>۴.۷ از ۵ امتیاز کلی</p>
+        <p>۵۸ سفارش در ۶ ماه گذشته</p>
       </div>
     </header>
 
     <!-- جستجو و مرتب‌سازی -->
     <div class="flex justify-between items-center mb-6">
-      <input id="searchInput" type="text" placeholder="جستجوی محصولات..." class="p-2 border rounded-lg w-1/3">
-      <select id="sortSelect" class="p-2 border rounded-lg">
+      <input id="searchInput" type="text" placeholder="جستجوی محصولات..." class="p-2 border rounded-lg w-1/3 focus:outline-none focus:ring-2 focus:ring-green-500">
+      <select id="sortSelect" class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
         <option value="newest">جدیدترین</option>
         <option value="cheapest">ارزان‌ترین</option>
         <option value="highest-rated">بیشترین امتیاز</option>
@@ -53,7 +54,7 @@
       <h2 class="text-xl font-semibold text-gray-800">پیشنهاد مشابه از فروشنده دیگر</h2>
       <p>پاد تمپر مشابه توسط فروشنده X</p>
       <p>قیمت: ۴۷۰٬۰۰۰ تومان | ارسال: ۳ روزه</p>
-      <button id="addToCompareSimilar" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">افزودن به لیست مقایسه</button>
+      <button id="addToCompareSimilar" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">افزودن به لیست مقایسه</button>
     </div>
 
     <!-- محصولات مکمل -->
@@ -112,7 +113,7 @@
       <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
         <h2 class="text-xl font-semibold text-gray-800">لیست مقایسه</h2>
         <ul id="compareList" class="mt-4"></ul>
-        <button id="closeModal" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">بستن</button>
+        <button id="closeModal" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">بستن</button>
       </div>
     </div>
   </div>
@@ -158,8 +159,8 @@
             <li class="text-gray-600">ارسال: ${product.shipping}</li>
             <li class="text-gray-600">توضیحات: ${product.desc}</li>
             <li class="text-gray-600">${product.rating} (${product.votes} رای)</li>
-            <li><button class="add-to-cart mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600" data-id="${product.id}">درخواست خرید</button></li>
-            <li><button class="add-to-compare mt-2 ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" data-id="${product.id}">افزودن به مقایسه</button></li>
+            <li><button class="add-to-cart mt-2 px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition" data-id="${product.id}">درخواست خرید</button></li>
+            <li><button class="add-to-compare mt-2 ml-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" data-id="${product.id}">افزودن به مقایسه</button></li>
           </ul>
         `;
         productList.appendChild(card);
