@@ -482,6 +482,7 @@ body.dark-mode .filter-btn:hover, body.dark-mode .filter-btn.active {
     gap: 1.5rem;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .service-card {
@@ -491,21 +492,22 @@ body.dark-mode .filter-btn:hover, body.dark-mode .filter-btn.active {
     text-align: center;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    position: relative;
     overflow: hidden;
-    max-width: 220px;
-    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .service-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  transition: transform 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.service-card-link:hover .service-card {
+    transform: translateY(-5px);
 }
 
-.service-card-link:hover .service-card {
-  transform: translateY(-5px);
-}
 body.dark-mode .service-card {
     background: #2a2a2a;
 }
@@ -529,7 +531,7 @@ body.dark-mode .service-card {
 
 .service-img {
     width: 100%;
-    height: 120px;
+    height: 140px;
     object-fit: cover;
     margin-bottom: 0.5rem;
     border-radius: 6px;
@@ -561,7 +563,7 @@ body.dark-mode .service-card h3 {
 }
 
 .service-card p {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #000;
     font-weight: 300;
     position: relative;
