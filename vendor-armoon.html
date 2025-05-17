@@ -4,136 +4,68 @@
   <meta charset="UTF-8">
   <title>فروشنده ارمون - اکسسوری بار کافه | کاسبچی</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const select = document.querySelector(".filters-bar select");
+      const cards = Array.from(document.querySelectorAll(".product-card"));
+      select.addEventListener("change", () => {
+        const container = document.querySelector(".blog-post");
+        const sorted = [...cards].sort((a, b) => {
+          const priceA = parseInt(a.querySelector(".price").dataset.value);
+          const priceB = parseInt(b.querySelector(".price").dataset.value);
+          if (select.value.includes("ارزان")) return priceA - priceB;
+          if (select.value.includes("امتیاز")) return b.querySelector(".stars").dataset.value - a.querySelector(".stars").dataset.value;
+          return 0;
+        });
+        sorted.forEach(card => container.appendChild(card));
+      });
+
+      document.querySelectorAll(".btn.btn-primary").forEach(btn => {
+        btn.addEventListener("click", () => {
+          alert("درخواست شما ثبت شد ✅");
+        });
+      });
+
+      const compareBtn = document.querySelector(".btn.btn-secondary");
+      if (compareBtn) {
+        compareBtn.addEventListener("click", () => {
+          alert("محصول به لیست مقایسه اضافه شد ✅");
+        });
+      }
+    });
+  </script>
   <style>
     body {
-      background-color: #fdfcfb;
+      background: linear-gradient(to top, #ffffff, #f5f5f5);
+      font-family: "Vazirmatn", sans-serif;
     }
-    .vendor-header {
-      padding-top: 6rem;
-      text-align: center;
-    }
-    .badge {
-      display: inline-block;
-      background: #f4a261;
-      color: #3c2f2f;
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      margin: 0.5rem;
-    }
-    .stats-grid {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-    .stat-item {
-      text-align: center;
-    }
-    .stat-item strong {
+    .product-card img.blog-img {
+      width: 160px;
+      height: auto;
       display: block;
-      font-size: 1.2rem;
-      color: #e76f51;
-    }
-    .filters-bar {
-      max-width: 800px;
-      margin: 2rem auto;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .filters-bar select, .filters-bar input {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      font-size: 0.9rem;
-    }
-    .product-card {
-      border: 1px solid #eee;
+      margin: 0 auto 1rem auto;
       border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 2rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      background: #fff;
     }
-    .purchase-box {
-      background: #f8edeb;
-      padding: 1rem;
+    .btn {
+      background-color: #2a9d8f;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
       border-radius: 8px;
-      margin-top: 1rem;
-      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-    .ratings {
-      direction: ltr;
-      text-align: right;
-      margin-top: 1rem;
+    .btn:hover {
+      background-color: #21867a;
     }
-    .ratings span {
-      color: gold;
-      font-size: 1.2rem;
+    .btn-secondary {
+      background-color: #264653;
     }
-    .support-icons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 2rem;
+    .btn-secondary:hover {
+      background-color: #1b323e;
     }
-    .support-icons div {
-      text-align: center;
-    }
-    .faq {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: #fff;
-      border-radius: 8px;
-      padding: 1rem;
-    }
-    .faq h3 {
-      margin-bottom: 1rem;
-    }
-    .faq-item {
-      margin-bottom: 1rem;
-    }
-    .login-warning {
-      background: #ffe0b2;
-      color: #3c2f2f;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 8px;
-      margin: 2rem auto;
-      max-width: 700px;
-    }
-    .compare-bar, .history-table, .cross-sell {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: #fff;
-      border-radius: 8px;
-      padding: 1rem;
-    }
-    .compare-bar div, .cross-sell div {
-      margin-bottom: 1rem;
-    }
-    .cross-sell img {
-      width: 100px;
-      border-radius: 6px;
-      margin-left: 1rem;
-    }
-    .cross-sell-item {
-      display: flex;
-      align-items: center;
-    }
-    .history-table table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .history-table th, .history-table td {
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      text-align: center;
+    .price, .stars {
+      display: none;
     }
   </style>
 </head>
@@ -146,7 +78,6 @@
     <h1>تأمین‌کننده شماره ۱</h1>
     <span class="badge">تأییدشده توسط کاسبچی</span>
     <span class="badge">فروشنده ویژه ⭐</span>
-
     <div class="stats-grid">
       <div class="stat-item">
         <strong>۹۲٪</strong> رضایت مشتری
@@ -173,8 +104,9 @@
   </div>
 
   <section class="blog-post">
-    <!-- محصولات نمونه -->
     <div class="product-card">
+      <span class="price" data-value="890000"></span>
+      <span class="stars" data-value="5"></span>
       <img class="blog-img" src="assets/images/vendor-armoon-1.jpg" alt="تمپر">
       <h2>تمپر قهوه استیل ۵۸.۴mm</h2>
       <ul>
@@ -187,12 +119,12 @@
         <input type="number" value="1" min="1" max="5">
         <button class="btn btn-primary">درخواست خرید</button>
       </div>
-      <div class="ratings">
-        ⭐⭐⭐⭐⭐ (۱۵ رای)
-      </div>
+      <div class="ratings">⭐⭐⭐⭐⭐ (۱۵ رای)</div>
     </div>
 
     <div class="product-card">
+      <span class="price" data-value="490000"></span>
+      <span class="stars" data-value="4"></span>
       <img class="blog-img" src="assets/images/vendor-armoon-2.jpg" alt="پاد تمپر">
       <h2>پاد تمپر سیلیکونی</h2>
       <ul>
@@ -205,13 +137,13 @@
         <input type="number" value="1" min="1" max="8">
         <button class="btn btn-primary">درخواست خرید</button>
       </div>
-      <div class="ratings">
-        ⭐⭐⭐⭐☆ (۱۰ رای)
-      </div>
+      <div class="ratings">⭐⭐⭐⭐☆ (۱۰ رای)</div>
     </div>
 
     <div class="product-card">
-      <img class="blog-img" src="assets/images/vendor-armoon-3.jpg" alt="فرچه تمیزکاری">
+      <span class="price" data-value="250000"></span>
+      <span class="stars" data-value="4"></span>
+      <img class="blog-img" src="assets/images/vendor-armoon-3.jpg" alt="فرچه">
       <h2>فرچه اسپرسو مخزن‌دار</h2>
       <ul>
         <li><strong>قیمت:</strong> ۲۵۰٬۰۰۰ تومان</li>
@@ -223,13 +155,13 @@
         <input type="number" value="1" min="1" max="10">
         <button class="btn btn-primary">درخواست خرید</button>
       </div>
-      <div class="ratings">
-        ⭐⭐⭐⭐☆ (۸ رای)
-      </div>
+      <div class="ratings">⭐⭐⭐⭐☆ (۸ رای)</div>
     </div>
 
     <div class="product-card">
-      <img class="blog-img" src="assets/images/vendor-armoon-4.jpg" alt="استند تمپر">
+      <span class="price" data-value="320000"></span>
+      <span class="stars" data-value="5"></span>
+      <img class="blog-img" src="assets/images/vendor-armoon-4.jpg" alt="استند">
       <h2>استند تمپر چوبی</h2>
       <ul>
         <li><strong>قیمت:</strong> ۳۲۰٬۰۰۰ تومان</li>
@@ -241,9 +173,7 @@
         <input type="number" value="1" min="1" max="3">
         <button class="btn btn-primary">درخواست خرید</button>
       </div>
-      <div class="ratings">
-        ⭐⭐⭐⭐⭐ (۱۲ رای)
-      </div>
+      <div class="ratings">⭐⭐⭐⭐⭐ (۱۲ رای)</div>
     </div>
   </section>
 
@@ -251,48 +181,6 @@
     <h3>پیشنهاد مشابه از فروشنده دیگر</h3>
     <p>پاد تمپر مشابه توسط فروشنده X با قیمت ۴۷۰٬۰۰۰ تومان و ارسال ۳ روزه</p>
     <button class="btn btn-secondary">افزودن به لیست مقایسه</button>
-  </div>
-
-  <div class="cross-sell">
-    <h3>محصولات مکمل پیشنهادی</h3>
-    <div class="cross-sell-item">
-      <img src="assets/images/vendor-armoon-4.jpg" alt="استند">
-      <div>
-        <strong>استند تمپر چوبی</strong>
-        <p>مناسب برای استفاده کنار تمپر</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="history-table">
-    <h3>سابقه سفارش موفق</h3>
-    <table>
-      <tr><th>تاریخ</th><th>محصول</th><th>امتیاز مشتری</th></tr>
-      <tr><td>۱۴۰۳/۰۲/۱۲</td><td>تمپر استیل</td><td>⭐⭐⭐⭐⭐</td></tr>
-      <tr><td>۱۴۰۳/۰۲/۱۰</td><td>پاد تمپر</td><td>⭐⭐⭐⭐</td></tr>
-    </table>
-  </div>
-
-  <div class="support-icons">
-    <div><img src="assets/images/compare-delivery.png" width="48"><p>ارسال سریع</p></div>
-    <div><img src="assets/images/compare-quality.png" width="48"><p>تضمین کیفیت</p></div>
-    <div><img src="assets/images/compare-support.png" width="48"><p>پشتیبانی کامل</p></div>
-  </div>
-
-  <div class="faq">
-    <h3>سوالات پرتکرار</h3>
-    <div class="faq-item">
-      <strong>آیا امکان مرجوعی وجود دارد؟</strong>
-      <p>در صورتی که کالا استفاده نشده باشد، تا ۳ روز فرصت دارید بازگشت دهید.</p>
-    </div>
-    <div class="faq-item">
-      <strong>محصولات شامل گارانتی هستند؟</strong>
-      <p>بله، تمام محصولات دارای ضمانت اصالت و سلامت فیزیکی هستند.</p>
-    </div>
-  </div>
-
-  <div class="login-warning">
-    برای مشاهده قیمت سایر محصولات و ثبت سفارش نهایی، لطفاً وارد حساب کاربری خود شوید.
   </div>
 </body>
 </html>
