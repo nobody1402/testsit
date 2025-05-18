@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="فروشگاه آرمان - اکسسوری‌های قهوه با کیفیت بالا در TestSit">
     <title>فروشگاه آرمان - TestSit</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com "></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn :wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     <link rel="manifest" href="/manifest.json">
 </head>
@@ -108,8 +108,6 @@
                         <td class="p-2">تمپر استیل</td>
                         <td class="p-2">⭐⭐⭐⭐⭐</td>
                     </tr>
-                    <(Received partial input, continuing to process)
-
                     <tr>
                         <td class="p-2">۱۴۰۳/۰۲/۱۰</td>
                         <td class="p-2">پاد تمپر</td>
@@ -172,7 +170,6 @@
             { id: 3, name: 'فرچه اسپرسو مخزن‌دار', price: 250000, originalPrice: 300000, stock: 10, shipping: '۲ روز کاری', desc: 'مخزن شوینده دار، برس نرم، دسته ضد لغزش', rating: '⭐⭐⭐⭐☆', votes: 8, image: 'assets/images/vendor-armoon-3.jpg', category: 'cleaning' },
             { id: 4, name: 'استند تمپر چوبی', price: 320000, stock: 3, shipping: '۱ تا ۲ روز کاری', desc: 'طراحی کلاسیک، نگهدارنده ایمن تمپر', rating: '⭐⭐⭐⭐⭐', votes: 12, image: 'assets/images/vendor-armoon-4.jpg', category: 'accessory' }
         ];
-
         let cart = [];
         let compareList = [];
 
@@ -219,7 +216,6 @@
                     `;
                     productList.appendChild(card);
                 });
-
                 document.querySelectorAll('.add-to-cart').forEach(button => {
                     button.addEventListener('click', () => {
                         const id = parseInt(button.dataset.id);
@@ -229,7 +225,6 @@
                         updateCart();
                     });
                 });
-
                 document.querySelectorAll('.add-to-compare').forEach(button => {
                     button.addEventListener('click', () => {
                         const id = parseInt(button.dataset.id);
@@ -286,7 +281,6 @@
                 </tr>
             `).join('');
             document.getElementById('compareModal').classList.remove('hidden');
-
             document.querySelectorAll('.remove-compare').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = parseInt(button.dataset.id);
@@ -297,37 +291,35 @@
         }
 
         function renderRelatedProducts() {
-    const relatedProducts = document.getElementById('relatedProducts');
+            const relatedProducts = document.getElementById('relatedProducts');
 
-    // ۴ محصول مکمل پیشنهادی
-    const relatedItems = [
-        { name: "قلاب تمپر ضد زنگ", price: 150000, image: "/assets/images/related-1.jpg" },
-        { name: "قاشق مدرج قهوه", price: 80000, image: "/assets/images/related-2.jpg" },
-        { name: "فرچه تمیزکاری فیلتر اسپرسو", price: 70000, image: "/assets/images/related-3.jpg" },
-        { name: "کف‌زن شیشه‌ای آمریکانو", price: 120000, image: "/assets/images/related-4.jpg" }
-    ];
+            // ۴ محصول مکمل پیشنهادی
+            const relatedItems = [
+                { name: "قلاب تمپر ضد زنگ", price: 150000, image: "/assets/images/related-1.jpg" },
+                { name: "قاشق مدرج قهوه", price: 80000, image: "/assets/images/related-2.jpg" },
+                { name: "فرچه تمیزکاری فیلتر اسپرسو", price: 70000, image: "/assets/images/related-3.jpg" },
+                { name: "کف‌زن شیشه‌ای آمریکانو", price: 120000, image: "/assets/images/related-4.jpg" }
+            ];
 
-    relatedProducts.innerHTML = relatedItems.map(item => `
-        <div class="card p-4">
-            <img src="${item.image}" alt="${item.name}" loading="lazy" class="mb-2 w-full h-40 object-cover rounded">
-            <p class="font-semibold">${item.name}</p>
-            <p>${formatPrice(item.price)}</p>
-            <button class="btn mt-2 add-to-cart-suggested">افزودن به سبد</button>
-        </div>
-    `).join('');
+            relatedProducts.innerHTML = relatedItems.map(item => `
+                <div class="card p-4">
+                    <img src="${item.image}" alt="${item.name}" loading="lazy" class="mb-2 w-full h-40 object-cover rounded">
+                    <p class="font-semibold">${item.name}</p>
+                    <p>${formatPrice(item.price)}</p>
+                    <button class="btn mt-2 add-to-cart-suggested">افزودن به سبد</button>
+                </div>
+            `).join('');
 
-    // افزودن عملکرد دکمه‌ها
-    document.querySelectorAll('.add-to-cart-suggested').forEach((button, index) => {
-        button.addEventListener('click', () => {
-            const item = relatedItems[index];
-            // چون این محصولات در آرایه `products` نیستند، یه ID موقت می‌ذاریم
-            const tempId = 100 + index;
-            cart.push({ product_id: tempId, quantity: 1 });
-            showToast(`"${item.name}" به سبد خرید اضافه شد!`, 'success');
-            updateCart();
-        });
-    });
-}
+            document.querySelectorAll('.add-to-cart-suggested').forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    const item = relatedItems[index];
+                    const tempId = 100 + index;
+                    cart.push({ product_id: tempId, quantity: 1 });
+                    showToast(`"${item.name}" به سبد خرید اضافه شد!`, 'success');
+                    updateCart();
+                });
+            });
+        }
 
         function sortProducts(criteria) {
             let sortedProducts = [...products];
@@ -417,6 +409,7 @@
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
         });
+
         if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
 
         renderProducts(products);
