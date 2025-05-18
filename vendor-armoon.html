@@ -6,7 +6,6 @@
     <meta name="description" content="فروشگاه آرمان - اکسسوری‌های قهوه با کیفیت بالا در TestSit">
     <title>فروشگاه آرمان - TestSit</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     <link rel="manifest" href="/manifest.json">
@@ -39,10 +38,7 @@
             <p class="text-lg font-semibold text-green-800">پیشنهاد ویژه: ۲۰٪ تخفیف فرچه اسپرسو تا ۲۴ ساعت آینده!</p>
         </div>
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-            <div class="relative w-full sm:w-1/3">
-                <input id="searchInput" type="text" placeholder="جستجوی محصولات..." class="p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-500">
-                <div id="searchSuggestions" class="absolute w-full bg-white border rounded-lg mt-1 hidden"></div>
-            </div>
+            <input id="searchInput" type="text" placeholder="جستجوی محصولات..." class="p-2 border rounded-lg w-full sm:w-1/3 focus:outline-none focus:ring-2 focus:ring-green-500">
             <div class="flex flex-col sm:flex-row gap-4">
                 <select id="sortSelect" class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="newest">جدیدترین</option>
@@ -55,13 +51,15 @@
                     <option value="cleaning">ابزار تمیزکاری</option>
                     <option value="accessory">لوازم جانبی</option>
                 </select>
-                <input id="priceRange" type="range" min="0" max="1000000" step="10000" class="w-full sm:w-auto">
-                <span id="priceValue">تا ۱٬۰۰۰٬۰۰۰ تومان</span>
+                <div class="flex items-center gap-2">
+                    <input id="priceRange" type="range" min="0" max="1000000" step="10000" value="1000000" class="w-full sm:w-32">
+                    <span id="priceValue" class="text-sm">تا ۱٬۰۰۰٬۰۰۰ تومان</span>
+                </div>
             </div>
         </div>
         <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
         <div class="card p-6 mt-6">
-            <h2 class="text-xl font-semibold">مقایسه محصولات</h2>
+            <h2 class="text-xl font-semibold">مقایسه با فروشنده دیگر</h2>
             <table class="w-full mt-4 text-right">
                 <thead>
                     <tr class="border-b">
@@ -69,7 +67,6 @@
                         <th class="p-2">فروشنده</th>
                         <th class="p-2">قیمت</th>
                         <th class="p-2">ارسال</th>
-                        <th class="p-2">جنس</th>
                         <th class="p-2"></th>
                     </tr>
                 </thead>
@@ -79,7 +76,6 @@
                         <td class="p-2">آرمان</td>
                         <td class="p-2">۴۹۰٬۰۰۰ تومان</td>
                         <td class="p-2">۱ روز کاری</td>
-                        <td class="p-2">سیلیکون</td>
                         <td class="p-2"><button class="btn mt-2 add-to-compare" data-id="2">افزودن</button></td>
                     </tr>
                     <tr>
@@ -87,7 +83,6 @@
                         <td class="p-2">فروشنده X</td>
                         <td class="p-2">۴۷۰٬۰۰۰ تومان</td>
                         <td class="p-2">۳ روزه</td>
-                        <td class="p-2">پلاستیک</td>
                         <td class="p-2"><button id="addToCompareSimilar" class="btn mt-2">افزودن</button></td>
                     </tr>
                 </tbody>
@@ -96,22 +91,6 @@
         <div class="card p-6 mt-6">
             <h2 class="text-xl font-semibold">محصولات مکمل پیشنهادی</h2>
             <div id="relatedProducts" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-        </div>
-        <div class="card p-6 mt-6">
-            <h2 class="text-xl font-semibold">نظرات کاربران</h2>
-            <div class="flex gap-4 mt-4">
-                <select id="commentFilter" class="p-2 border rounded-lg">
-                    <option value="all">همه نظرات</option>
-                    <option value="5">۵ ستاره</option>
-                    <option value="4">۴ ستاره</option>
-                    <option value="3">۳ ستاره</option>
-                </select>
-                <select id="commentSort" class="p-2 border rounded-lg">
-                    <option value="newest">جدیدترین</option>
-                    <option value="oldest">قدیمی‌ترین</option>
-                </select>
-            </div>
-            <div id="commentsList" class="mt-4"></div>
         </div>
         <div class="card p-6 mt-6">
             <h2 class="text-xl font-semibold">سابقه سفارش موفق</h2>
@@ -155,7 +134,7 @@
             <button id="checkoutBtn" class="btn mt-4">پرداخت نهایی</button>
         </div>
         <div id="compareModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
-            <div class="card p-6 w-full max-w-4xl">
+            <div class="card p-6 w-full max-w-3xl">
                 <h2 class="text-xl font-semibold">لیست مقایسه</h2>
                 <table id="compareList" class="w-full mt-4 text-right">
                     <thead>
@@ -164,7 +143,6 @@
                             <th class="p-2">قیمت</th>
                             <th class="p-2">ارسال</th>
                             <th class="p-2">موجودی</th>
-                            <th class="p-2">جنس</th>
                             <th class="p-2">حذف</th>
                         </tr>
                     </thead>
@@ -187,15 +165,14 @@
     <script src="/service-worker.js"></script>
     <script>
         const products = [
-            { id: 1, name: 'تمپر قهوه استیل ۵۸.۴mm', price: 890000, stock: 5, shipping: 'تا ۲ روز کاری', desc: 'طراحی حرفه‌ای، ضد زنگ، مناسب اسپرسوسازهای صنعتی', rating: 5, votes: 15, image: '/assets/images/vendor-armoon-1.jpg', category: 'tamper', material: 'استیل', variants: [{ size: '58.4mm', price: 890000 }, { size: '51mm', price: 850000 }], views: 120 },
-            { id: 2, name: 'پاد تمپر سیلیکونی', price: 490000, stock: 8, shipping: '۱ روز کاری', desc: 'ضد لغزش، مقاوم در برابر حرارت بالا', rating: 4, votes: 10, image: '/assets/images/vendor-armoon-2.jpg', category: 'tamper', material: 'سیلیکون', variants: [], views: 80 },
-            { id: 3, name: 'فرچه اسپرسو مخزن‌دار', price: 250000, originalPrice: 300000, stock: 10, shipping: '۲ روز کاری', desc: 'مخزن شوینده دار، برس نرم، دسته ضد لغزش', rating: 4, votes: 8, image: '/assets/images/vendor-armoon-3.jpg', category: 'cleaning', material: 'پلاستیک', variants: [], views: 150 },
-            { id: 4, name: 'استند تمپر چوبی', price: 320000, stock: 3, shipping: '۱ تا ۲ روز کاری', desc: 'طراحی کلاسیک، نگهدارنده ایمن تمپر', rating: 5, votes: 12, image: '/assets/images/vendor-armoon-4.jpg', category: 'accessory', material: 'چوب', variants: [], views: 90 },
+            { id: 1, name: 'تمپر قهوه استیل ۵۸.۴mm', price: 890000, stock: 5, shipping: 'تا ۲ روز کاری', desc: 'طراحی حرفه‌ای، ضد زنگ، مناسب اسپرسوسازهای صنعتی', rating: '⭐⭐⭐⭐⭐', votes: 15, image: '/assets/images/vendor-armoon-1.jpg', category: 'tamper' },
+            { id: 2, name: 'پاد تمپر سیلیکونی', price: 490000, stock: 8, shipping: '۱ روز کاری', desc: 'ضد لغزش، مقاوم در برابر حرارت بالا', rating: '⭐⭐⭐⭐☆', votes: 10, image: '/assets/images/vendor-armoon-2.jpg', category: 'tamper' },
+            { id: 3, name: 'فرچه اسپرسو مخزن‌دار', price: 250000, originalPrice: 300000, stock: 10, shipping: '۲ روز کاری', desc: 'مخزن شوینده دار، برس نرم، دسته ضد لغزش', rating: '⭐⭐⭐⭐☆', votes: 8, image: '/assets/images/vendor-armoon-3.jpg', category: 'cleaning' },
+            { id: 4, name: 'استند تمپر چوبی', price: 320000, stock: 3, shipping: '۱ تا ۲ روز کاری', desc: 'طراحی کلاسیک، نگهدارنده ایمن تمپر', rating: '⭐⭐⭐⭐⭐', votes: 12, image: '/assets/images/vendor-armoon-4.jpg', category: 'accessory' }
         ];
 
         let cart = [];
         let compareList = [];
-        let userId = localStorage.getItem('userId') || 'guest';
 
         function formatPrice(price) {
             return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '٬') + ' تومان';
@@ -209,30 +186,23 @@
             setTimeout(() => toast.classList.add('hidden'), 3000);
         }
 
-        async function fetchComments(productId, ratingFilter = 'all', sort = 'newest') {
-            const response = await fetch(`/api.php?action=comments&product_id=${productId}&rating=${ratingFilter}&sort=${sort}`);
-            return await response.json();
-        }
-
-        async function renderProducts(productArray, filters = {}) {
+        function renderProducts(productArray, filters = {}) {
             const productList = document.getElementById('productList');
             productList.innerHTML = '<div class="skeleton-card"></div>'.repeat(4);
-            setTimeout(async () => {
-                productList.innerHTML = '';
+            setTimeout(() => {
                 const filteredProducts = productArray.filter(p => {
                     const matchesPrice = p.price <= (filters.price || 1000000);
                     const matchesCategory = filters.category === 'all' || p.category === filters.category;
                     const matchesSearch = !filters.search || p.name.toLowerCase().includes(filters.search.toLowerCase()) || p.desc.toLowerCase().includes(filters.search.toLowerCase());
                     return matchesPrice && matchesCategory && matchesSearch;
                 });
-                filteredProducts.forEach(async product => {
-                    const comments = await fetchComments(product.id);
+                productList.innerHTML = '';
+                filteredProducts.forEach(product => {
                     const card = document.createElement('div');
-                    card.className = `card p-4 fade-in ${product.views > 100 ? 'hot-product' : ''}`;
+                    card.className = 'card p-4 fade-in';
                     card.innerHTML = `
                         <div class="relative group">
                             <img src="${product.image}" alt="${product.name}" loading="lazy" class="transition-transform duration-300 group-hover:scale-110">
-                            ${product.views > 100 ? '<span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">🔥 پرطرفدار</span>' : ''}
                         </div>
                         <h2 class="text-lg font-semibold">${product.name}</h2>
                         <ul>
@@ -240,229 +210,93 @@
                             <li class="${product.stock <= 5 ? 'stock-low' : ''} ${product.stock <= 3 ? 'stock-critical' : ''}">موجودی: ${product.stock} عدد</li>
                             <li>ارسال: ${product.shipping}</li>
                             <li>توضیحات: ${product.desc}</li>
-                            <li>${'⭐'.repeat(product.rating)} (${product.votes} رای)</li>
-                            ${product.variants.length ? `
-                                <li>
-                                    <select class="variant-select p-2 border rounded-lg w-full" data-id="${product.id}">
-                                        ${product.variants.map(v => `<option value="${v.price}">${v.size}</option>`).join('')}
-                                    </select>
-                                </li>
-                            ` : ''}
+                            <li>${product.rating} (${product.votes} رای)</li>
                             <li><button class="btn mt-2 add-to-cart" data-id="${product.id}">درخواست خرید</button></li>
                             <li><button class="btn mt-2 ml-2 add-to-compare" data-id="${product.id}">افزودن به مقایسه</button></li>
-                            <li class="mt-2">
-                                <button class="btn bg-gray-500 hover:bg-gray-600 share-product" data-id="${product.id}">اشتراک‌گذاری</button>
-                            </li>
                         </ul>
-                        <div class="mt-4">
-                            <h3 class="text-sm font-semibold">نظرات کاربران:</h3>
-                            ${comments.length ? comments.map(c => `
-                                <p class="text-sm">${c.user}: ${c.text} (${'⭐'.repeat(c.rating)})</p>
-                                ${c.reply ? `<p class="text-sm text-gray-500">پاسخ فروشنده: ${c.reply}</p>` : ''}
-                            `).join('') : '<p class="text-sm">نظری ثبت نشده</p>'}
-                            <form class="comment-form mt-2" data-id="${product.id}">
-                                <input type="text" name="user" placeholder="نام شما" class="p-2 border rounded-lg w-full mb-2">
-                                <textarea name="text" placeholder="نظر شما" class="p-2 border rounded-lg w-full mb-2"></textarea>
-                                <div class="star-rating mb-2">
-                                    ${[1, 2, 3, 4, 5].map(i => `<span class="star" data-value="${i}">☆</span>`).join('')}
-                                    <input type="hidden" name="rating" value="0">
-                                </div>
-                                <button type="submit" class="btn">ارسال نظر</button>
-                            </form>
-                        </div>
                     `;
                     productList.appendChild(card);
                 });
 
                 document.querySelectorAll('.add-to-cart').forEach(button => {
-                    button.addEventListener('click', async () => {
+                    button.addEventListener('click', () => {
                         const id = parseInt(button.dataset.id);
-                        const variantSelect = button.closest('ul').querySelector('.variant-select');
-                        const price = variantSelect ? parseInt(variantSelect.value) : products.find(p => p.id === id).price;
-                        try {
-                            const response = await axios.post('/api.php', `action=cart&product_id=${id}&quantity=1&user_id=${userId}&price=${price}`);
-                            showToast('محصول به سبد خرید اضافه شد!', 'success');
-                            updateCart();
-                            checkStock(id);
-                        } catch (err) {
-                            showToast('خطا در افزودن به سبد خرید', 'error');
-                        }
+                        const product = products.find(p => p.id === id);
+                        cart.push({ product_id: id, quantity: 1 });
+                        showToast('محصول به سبد خرید اضافه شد!', 'success');
+                        updateCart();
                     });
                 });
 
                 document.querySelectorAll('.add-to-compare').forEach(button => {
-                    button.addEventListener('click', async () => {
+                    button.addEventListener('click', () => {
                         const id = parseInt(button.dataset.id);
-                        const product = products.find(p => p.id === id) || { id: 5, name: 'پاد تمپر مشابه', price: 470000, shipping: '۳ روزه', stock: 0, material: 'پلاستیک' };
+                        const product = products.find(p => p.id === id);
                         if (compareList.find(item => item.id === id)) {
                             showToast('این محصول قبلاً به لیست مقایسه اضافه شده است!', 'error');
                         } else {
-                            try {
-                                const response = await axios.post('/api.php', `action=compare&product_id=${id}`);
-                                compareList.push(product);
-                                updateCompareList();
-                                showToast('محصول به لیست مقایسه اضافه شد!', 'success');
-                            } catch (err) {
-                                showToast('خطا در افزودن به مقایسه', 'error');
-                            }
+                            compareList.push(product);
+                            updateCompareList();
+                            showToast('محصول به لیست مقایسه اضافه شد!', 'success');
                         }
-                    });
-                });
-
-                document.querySelectorAll('.comment-form').forEach(form => {
-                    form.addEventListener('submit', async (e) => {
-                        e.preventDefault();
-                        const id = parseInt(form.dataset.id);
-                        const user = form.querySelector('[name="user"]').value;
-                        const text = form.querySelector('[name="text"]').value;
-                        const rating = form.querySelector('[name="rating"]').value;
-                        try {
-                            const response = await axios.post('/api.php', `action=comments&product_id=${id}&user=${encodeURIComponent(user)}&text=${encodeURIComponent(text)}&rating=${rating}`);
-                            showToast('نظر ثبت شد!', 'success');
-                            renderProducts(products, filters);
-                            renderComments(id);
-                        } catch (err) {
-                            showToast('خطا در ثبت نظر', 'error');
-                        }
-                    });
-                    const stars = form.querySelectorAll('.star');
-                    stars.forEach(star => {
-                        star.addEventListener('click', () => {
-                            const value = star.dataset.value;
-                            form.querySelector('[name="rating"]').value = value;
-                            stars.forEach(s => s.innerHTML = parseInt(s.dataset.value) <= value ? '★' : '☆');
-                        });
-                    });
-                });
-
-                document.querySelectorAll('.share-product').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const id = parseInt(button.dataset.id);
-                        const url = `${window.location.origin}/vendor-armoon.html#product${id}`;
-                        navigator.clipboard.writeText(url).then(() => {
-                            showToast('لینک محصول کپی شد!', 'success');
-                        });
-                    });
-                });
-
-                document.querySelectorAll('.variant-select').forEach(select => {
-                    select.addEventListener('change', () => {
-                        const price = parseInt(select.value);
-                        const li = select.closest('ul').querySelector('li:nth-child(1)');
-                        li.innerHTML = `قیمت: ${formatPrice(price)}`;
                     });
                 });
             }, 500);
         }
 
-        async function updateCart() {
+        function updateCart() {
             const cartSummary = document.getElementById('cartSummary');
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
-            try {
-                const response = await axios.get(`/api.php?action=cart&user_id=${userId}`);
-                cart = response.data;
-                if (cart.length > 0) {
-                    cartItems.innerHTML = cart.map(item => {
-                        const product = products.find(p => p.id === item.product_id);
-                        return `
-                            <li class="flex justify-between py-2 border-b">
-                                <span>${product ? product.name : 'محصول'}</span>
-                                <div class="flex items-center gap-2">
-                                    <button class="decrease-quantity px-2 py-1 bg-gray-200 rounded" data-id="${item.product_id}">-</button>
-                                    <span>${item.quantity}</span>
-                                    <button class="increase-quantity px-2 py-1 bg-gray-200 rounded" data-id="${item.product_id}">+</button>
-                                    <span>${formatPrice((item.price || (product ? product.price : 0)) * item.quantity)}</span>
-                                </div>
-                            </li>
-                        `;
-                    }).join('');
-                    const total = cart.reduce((sum, item) => sum + (item.price || (products.find(p => p.id === item.product_id)?.price || 0)) * item.quantity, 0);
-                    cartTotal.textContent = formatPrice(total);
-                } else {
-                    cartSummary.classList.add('hidden');
-                }
-            } catch (err) {
-                showToast('خطا در بارگذاری سبد خرید', 'error');
-            }
-
-            document.querySelectorAll('.increase-quantity').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const id = parseInt(button.dataset.id);
-                    const cartItem = cart.find(item => item.product_id === id);
-                    try {
-                        await axios.post('/api.php', `action=cart&product_id=${id}&quantity=${(cartItem.quantity || 1) + 1}&user_id=${userId}`);
-                        updateCart();
-                    } catch (err) {
-                        showToast('خطا در به‌روزرسانی سبد خرید', 'error');
-                    }
-                });
-            });
-
-            document.querySelectorAll('.decrease-quantity').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const id = parseInt(button.dataset.id);
-                    const cartItem = cart.find(item => item.product_id === id);
-                    if (cartItem.quantity > 1) {
-                        try {
-                            await axios.post('/api.php', `action=cart&product_id=${id}&quantity=${cartItem.quantity - 1}&user_id=${userId}`);
-                            updateCart();
-                        } catch (err) {
-                            showToast('خطا در به‌روزرسانی سبد خرید', 'error');
-                        }
-                    }
-                });
-            });
-        }
-
-        async function updateCompareList() {
-            const compareListElement = document.getElementById('compareList').querySelector('tbody');
-            try {
-                const response = await axios.get('/api.php?action=compare');
-                compareList = response.data;
-                compareListElement.innerHTML = compareList.map(item => {
-                    const product = products.find(p => p.id === item.product_id) || { id: 5, name: 'پاد تمپر مشابه', price: 470000, shipping: '۳ روزه', stock: 0, material: 'پلاستیک' };
+            if (cart.length > 0) {
+                cartSummary.classList.remove('hidden');
+                cartItems.innerHTML = cart.map(item => {
+                    const product = products.find(p => p.id === item.product_id);
                     return `
-                        <tr>
-                            <td class="p-2">${product.name}</td>
-                            <td class="p-2">${formatPrice(product.price)}</td>
-                            <td class="p-2">${product.shipping || 'نامشخص'}</td>
-                            <td class="p-2">${product.stock || 'نامشخص'}</td>
-                            <td class="p-2">${product.material || 'نامشخص'}</td>
-                            <td class="p-2"><button class="btn bg-red-500 hover:bg-red-600 remove-compare" data-id="${item.product_id}">حذف</button></td>
-                        </tr>
+                        <li class="flex justify-between py-2 border-b">
+                            <span>${product ? product.name : 'محصول'}</span>
+                            <div class="flex items-center gap-2">
+                                <span>${item.quantity}</span>
+                                <span>${formatPrice((product ? product.price : 0) * item.quantity)}</span>
+                            </div>
+                        </li>
                     `;
                 }).join('');
-                document.getElementById('compareModal').classList.remove('hidden');
-
-                document.querySelectorAll('.remove-compare').forEach(button => {
-                    button.addEventListener('click', async () => {
-                        const id = parseInt(button.dataset.id);
-                        compareList = compareList.filter(item => item.product_id !== id);
-                        updateCompareList();
-                    });
-                });
-            } catch (err) {
-                showToast('خطا در بارگذاری لیست مقایسه', 'error');
+                const total = cart.reduce((sum, item) => {
+                    const product = products.find(p => p.id === item.product_id);
+                    return sum + (product ? product.price * item.quantity : 0);
+                }, 0);
+                cartTotal.textContent = formatPrice(total);
+            } else {
+                cartSummary.classList.add('hidden');
             }
         }
 
-        async function renderComments(productId, ratingFilter = 'all', sort = 'newest') {
-            const commentsList = document.getElementById('commentsList');
-            const comments = await fetchComments(productId, ratingFilter, sort);
-            commentsList.innerHTML = comments.length ? comments.map(c => `
-                <div class="border-b py-2">
-                    <p class="text-sm">${c.user}: ${c.text} (${'⭐'.repeat(c.rating)})</p>
-                    ${c.reply ? `<p class="text-sm text-gray-500">پاسخ فروشنده: ${c.reply}</p>` : ''}
-                </div>
-            `).join('') : '<p class="text-sm">نظری ثبت نشده</p>';
+        function updateCompareList() {
+            const compareListElement = document.getElementById('compareList').querySelector('tbody');
+            compareListElement.innerHTML = compareList.map(item => `
+                <tr>
+                    <td class="p-2">${item.name}</td>
+                    <td class="p-2">${formatPrice(item.price)}</td>
+                    <td class="p-2">${item.shipping}</td>
+                    <td class="p-2">${item.stock}</td>
+                    <td class="p-2"><button class="btn bg-red-500 hover:bg-red-600 remove-compare" data-id="${item.id}">حذف</button></td>
+                </tr>
+            `).join('');
+            document.getElementById('compareModal').classList.remove('hidden');
+
+            document.querySelectorAll('.remove-compare').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = parseInt(button.dataset.id);
+                    compareList = compareList.filter(item => item.id !== id);
+                    updateCompareList();
+                });
+            });
         }
 
-        async function renderRelatedProducts(productId) {
+        function renderRelatedProducts() {
             const relatedProducts = document.getElementById('relatedProducts');
-            const currentProduct = products.find(p => p.id === productId);
-            const response = await axios.get(`/api.php?action=related&category=${currentProduct.category}&exclude=${productId}`);
-            const related = response.data.slice(0, 2);
+            const related = products.slice(0, 2);
             relatedProducts.innerHTML = related.map(p => `
                 <div class="card p-4">
                     <img src="${p.image}" alt="${p.name}" loading="lazy">
@@ -473,24 +307,13 @@
             `).join('');
 
             document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', async () => {
+                button.addEventListener('click', () => {
                     const id = parseInt(button.dataset.id);
-                    try {
-                        await axios.post('/api.php', `action=cart&product_id=${id}&quantity=1&user_id=${userId}`);
-                        showToast('محصول به سبد خرید اضافه شد!', 'success');
-                        updateCart();
-                    } catch (err) {
-                        showToast('خطا در افزودن به سبد خرید', 'error');
-                    }
+                    cart.push({ product_id: id, quantity: 1 });
+                    showToast('محصول به سبد خرید اضافه شد!', 'success');
+                    updateCart();
                 });
             });
-        }
-
-        async function checkStock(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product.stock <= 5) {
-                showToast(`هشدار: فقط ${product.stock} عدد از ${product.name} باقی مانده!`, 'error');
-            }
         }
 
         function sortProducts(criteria) {
@@ -505,7 +328,11 @@
                 default:
                     sortedProducts = [...products];
             }
-            renderProducts(sortedProducts);
+            renderProducts(sortedProducts, {
+                price: parseInt(document.getElementById('priceRange').value),
+                category: document.getElementById('categoryFilter').value,
+                search: document.getElementById('searchInput').value
+            });
         }
 
         document.getElementById('sortSelect').addEventListener('change', (e) => {
@@ -521,6 +348,15 @@
             renderProducts(products, filters);
         });
 
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const filters = {
+                category: document.getElementById('categoryFilter').value,
+                price: parseInt(document.getElementById('priceRange').value),
+                search: e.target.value
+            };
+            renderProducts(products, filters);
+        });
+
         document.getElementById('priceRange').addEventListener('input', (e) => {
             const price = e.target.value;
             document.getElementById('priceValue').textContent = `تا ${formatPrice(price)}`;
@@ -532,57 +368,27 @@
             renderProducts(products, filters);
         });
 
-        document.getElementById('searchInput').addEventListener('input', async (e) => {
-            const query = e.target.value.toLowerCase();
-            const suggestions = document.getElementById('searchSuggestions');
+        document.getElementById('priceRange').addEventListener('touchmove', () => {
             const filters = {
                 category: document.getElementById('categoryFilter').value,
                 price: parseInt(document.getElementById('priceRange').value),
-                search: query
+                search: document.getElementById('searchInput').value
             };
             renderProducts(products, filters);
-            if (query) {
-                const response = await axios.get(`/api.php?action=search&q=${encodeURIComponent(query)}`);
-                suggestions.innerHTML = response.data.map(p => `<div class="p-2 hover:bg-gray-100 cursor-pointer">${p.name}</div>`).join('');
-                suggestions.classList.remove('hidden');
-            } else {
-                suggestions.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('searchSuggestions').addEventListener('click', (e) => {
-            if (e.target.classList.contains('p-2')) {
-                document.getElementById('searchInput').value = e.target.textContent;
-                document.getElementById('searchSuggestions').classList.add('hidden');
-                renderProducts(products, { search: e.target.textContent });
-            }
-        });
-
-        document.getElementById('commentFilter').addEventListener('change', (e) => {
-            renderComments(1, e.target.value, document.getElementById('commentSort').value);
-        });
-
-        document.getElementById('commentSort').addEventListener('change', (e) => {
-            renderComments(1, document.getElementById('commentFilter').value, e.target.value);
         });
 
         document.getElementById('closeModal').addEventListener('click', () => {
             document.getElementById('compareModal').classList.add('hidden');
         });
 
-        document.getElementById('addToCompareSimilar').addEventListener('click', async () => {
-            const similarProduct = { id: 5, name: 'پاد تمپر مشابه', price: 470000, shipping: '۳ روزه', stock: 0, material: 'پلاستیک' };
-            if (compareList.find(item => item.product_id === similarProduct.id)) {
+        document.getElementById('addToCompareSimilar').addEventListener('click', () => {
+            const similarProduct = { id: 5, name: 'پاد تمپر مشابه', price: 470000, shipping: '۳ روزه', stock: 0 };
+            if (compareList.find(item => item.id === similarProduct.id)) {
                 showToast('این محصول قبلاً به لیست مقایسه اضافه شده است!', 'error');
             } else {
-                try {
-                    const response = await axios.post('/api.php', `action=compare&product_id=${similarProduct.id}`);
-                    compareList.push(similarProduct);
-                    updateCompareList();
-                    showToast('محصول مشابه به لیست مقایسه اضافه شد!', 'success');
-                } catch (err) {
-                    showToast('خطا در افزودن به مقایسه', 'error');
-                }
+                compareList.push(similarProduct);
+                updateCompareList();
+                showToast('محصول مشابه به لیست مقایسه اضافه شد!', 'success');
             }
         });
 
@@ -594,15 +400,6 @@
             document.getElementById('cartSummary').classList.toggle('hidden');
         });
 
-        document.getElementById('priceRange').addEventListener('touchmove', () => {
-            const filters = {
-                category: document.getElementById('categoryFilter').value,
-                price: parseInt(document.getElementById('priceRange').value),
-                search: document.getElementById('searchInput').value
-            };
-            renderProducts(products, filters);
-        });
-
         document.getElementById('themeToggle').addEventListener('click', () => {
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
@@ -611,8 +408,7 @@
 
         renderProducts(products);
         updateCart();
-        renderComments(1);
-        renderRelatedProducts(1);
+        renderRelatedProducts();
     </script>
 </body>
 </html>
