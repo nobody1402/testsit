@@ -7,11 +7,6 @@ body {
     padding: 0;
 }
 
-.dark {
-    background-color: #1F2937;
-    color: #D1D5DB;
-}
-
 /* هدر */
 header {
     background-color: #ffffff;
@@ -19,10 +14,6 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-}
-
-.dark header {
-    background-color: #374151;
 }
 
 header .logo {
@@ -36,12 +27,7 @@ header nav a {
     transition: color 0.3s ease;
 }
 
-.dark header nav a {
-    color: #D1D5DB;
-}
-
-header nav a:hover,
-.dark header nav a:hover {
+header nav a:hover {
     color: #047857;
 }
 
@@ -51,10 +37,6 @@ header nav a:hover,
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.dark .card {
-    background-color: #374151;
 }
 
 .card:hover {
@@ -93,14 +75,8 @@ header nav a:hover,
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* هشدارها */
@@ -142,10 +118,6 @@ footer {
     text-align: center;
 }
 
-.dark footer {
-    background-color: #374151;
-}
-
 footer a {
     color: #4B5563;
     text-decoration: none;
@@ -153,63 +125,8 @@ footer a {
     transition: color 0.3s ease;
 }
 
-.dark footer a {
-    color: #D1D5DB;
-}
-
-footer a:hover,
-.dark footer a:hover {
+footer a:hover {
     color: #047857;
-}
-
-/* لودینگ اسکلتون */
-.skeleton-card {
-    background: #e5e7eb;
-    height: 300px;
-    border-radius: 8px;
-    animation: pulse 1.5s infinite;
-}
-
-.dark .skeleton-card {
-    background: #4B5563;
-}
-
-@keyframes pulse {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* محصولات پرطرفدار */
-.hot-product {
-    position: relative;
-}
-
-.hot-product::after {
-    content: '🔥';
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #B91C1C;
-    font-size: 1.2rem;
-}
-
-/* امتیازدهی ستاره */
-.star {
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #F59E0B;
-}
-
-.star:hover,
-.star.active {
-    color: #D97706;
 }
 
 /* ریسپانسیو */
