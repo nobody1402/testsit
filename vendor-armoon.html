@@ -1,414 +1,0 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="فروشگاه آرمان - اکسسوری‌های قهوه با کیفیت بالا در TestSit">
-    <title>فروشگاه آرمان - TestSit</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="manifest" href="/manifest.json">
-</head>
-<body>
-    <div class="container mx-auto p-4">
-        <div class="flex justify-end mb-4">
-            <button id="themeToggle" class="btn">تغییر تم</button>
-        </div>
-        <nav class="text-sm mb-4">
-            <a href="/index.html">خانه</a> >
-            <a href="/accessories.html" class="mr-2">اکسسوری</a> >
-            <span>فروشنده آرمان</span>
-        </nav>
-        <header class="rounded-lg p-6 mb-6 flex items-center justify-between">
-            <div class="flex items-center">
-                <img src="/assets/images/logo-testsit.png" alt="لوگو TestSit" class="logo">
-                <h1 class="text-3xl font-bold">TestSit</h1>
-            </div>
-            <div class="text-sm text-right">
-                <p class="font-semibold text-lg">تأمین‌کننده شماره ۱</p>
-                <p class="text-green-600">تأییدشده توسط TestSit | فروشنده ویژه ⭐</p>
-                <p>۹۲٪ رضایت مشتری</p>
-                <p>۲ روز زمان ارسال میانگین</p>
-                <p>۴.۷ از ۵ امتیاز کلی</p>
-                <p>۵۸ سفارش در ۶ ماه گذشته</p>
-            </div>
-        </header>
-        <div class="bg-green-100 rounded-lg p-4 mb-6 text-center">
-            <p class="text-lg font-semibold text-green-800">پیشنهاد ویژه: ۲۰٪ تخفیف فرچه اسپرسو تا ۲۴ ساعت آینده!</p>
-        </div>
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-            <input id="searchInput" type="text" placeholder="جستجوی محصولات..." class="p-2 border rounded-lg w-full sm:w-1/3 focus:outline-none focus:ring-2 focus:ring-green-500">
-            <div class="flex flex-col sm:flex-row gap-4">
-                <select id="sortSelect" class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                    <option value="newest">جدیدترین</option>
-                    <option value="cheapest">ارزان‌ترین</option>
-                    <option value="highest-rated">بیشترین امتیاز</option>
-                </select>
-                <select id="categoryFilter" class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                    <option value="all">همه دسته‌ها</option>
-                    <option value="tamper">تمپر</option>
-                    <option value="cleaning">ابزار تمیزکاری</option>
-                    <option value="accessory">لوازم جانبی</option>
-                </select>
-                <div class="flex items-center gap-2">
-                    <input id="priceRange" type="range" min="0" max="1000000" step="10000" value="1000000" class="w-full sm:w-32">
-                    <span id="priceValue" class="text-sm">تا ۱٬۰۰۰٬۰۰۰ تومان</span>
-                </div>
-            </div>
-        </div>
-        <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-        <div class="card p-6 mt-6">
-            <h2 class="text-xl font-semibold">مقایسه با فروشنده دیگر</h2>
-            <table class="w-full mt-4 text-right">
-                <thead>
-                    <tr class="border-b">
-                        <th class="p-2">محصول</th>
-                        <th class="p-2">فروشنده</th>
-                        <th class="p-2">قیمت</th>
-                        <th class="p-2">ارسال</th>
-                        <th class="p-2"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="p-2">پاد تمپر سیلیکونی</td>
-                        <td class="p-2">آرمان</td>
-                        <td class="p-2">۴۹۰٬۰۰۰ تومان</td>
-                        <td class="p-2">۱ روز کاری</td>
-                        <td class="p-2"><button class="btn mt-2 add-to-compare" data-id="2">افزودن</button></td>
-                    </tr>
-                    <tr>
-                        <td class="p-2">پاد تمپر مشابه</td>
-                        <td class="p-2">فروشنده X</td>
-                        <td class="p-2">۴۷۰٬۰۰۰ تومان</td>
-                        <td class="p-2">۳ روزه</td>
-                        <td class="p-2"><button id="addToCompareSimilar" class="btn mt-2">افزودن</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="card p-6 mt-6">
-            <h2 class="text-xl font-semibold">محصولات مکمل پیشنهادی</h2>
-            <div id="relatedProducts" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-        </div>
-        <div class="card p-6 mt-6">
-            <h2 class="text-xl font-semibold">سابقه سفارش موفق</h2>
-            <table class="w-full mt-4 text-right">
-                <thead>
-                    <tr class="border-b">
-                        <th class="p-2">تاریخ</th>
-                        <th class="p-2">محصول</th>
-                        <th class="p-2">امتیاز مشتری</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="p-2">۱۴۰۳/۰۲/۱۲</td>
-                        <td class="p-2">تمپر استیل</td>
-                        <td class="p-2">⭐⭐⭐⭐⭐</td>
-                    </tr>
-                    <tr>
-                        <td class="p-2">۱۴۰۳/۰۲/۱۰</td>
-                        <td class="p-2">پاد تمپر</td>
-                        <td class="p-2">⭐⭐⭐⭐</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="card p-6 mt-6">
-            <h2 class="text-xl font-semibold">سوالات پرتکرار</h2>
-            <div class="mt-4">
-                <p class="font-semibold">آیا امکان مرجوعی وجود دارد؟</p>
-                <p>در صورتی که کالا استفاده نشده باشد، تا ۳ روز فرصت دارید بازگشت دهید.</p>
-            </div>
-            <div class="mt-4">
-                <p class="font-semibold">محصولات شامل گارانتی هستند؟</p>
-                <p>بله، تمام محصولات دارای ضمانت اصالت و سلامت فیزیکی هستند.</p>
-            </div>
-        </div>
-        <div id="cartSummary" class="fixed bottom-4 right-4 card p-4 hidden">
-            <h2 class="text-xl font-semibold">سبد خرید</h2>
-            <ul id="cartItems" class="mt-4"></ul>
-            <p class="mt-4 font-semibold">جمع کل: <span id="cartTotal">۰ تومان</span></p>
-            <button id="checkoutBtn" class="btn mt-4">پرداخت نهایی</button>
-        </div>
-        <div id="compareModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
-            <div class="card p-6 w-full max-w-3xl">
-                <h2 class="text-xl font-semibold">لیست مقایسه</h2>
-                <table id="compareList" class="w-full mt-4 text-right">
-                    <thead>
-                        <tr class="border-b">
-                            <th class="p-2">محصول</th>
-                            <th class="p-2">قیمت</th>
-                            <th class="p-2">ارسال</th>
-                            <th class="p-2">موجودی</th>
-                            <th class="p-2">حذف</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <button id="closeModal" class="btn mt-4 bg-red-500 hover:bg-red-600">بستن</button>
-            </div>
-        </div>
-        <footer class="rounded-lg p-6 mt-6">
-            <p>تمامی حقوق این وب‌سایت محفوظ است. © ۱۴۰۴ TestSit</p>
-            <div class="mt-4 flex justify-center gap-4">
-                <a href="/about.html">درباره ما</a>
-                <a href="/contact.html">تماس با ما</a>
-                <a href="/terms.html">شرایط و قوانین</a>
-            </div>
-        </footer>
-    </div>
-    <div id="toast" class="toast hidden"></div>
-    <button id="cartToggle" class="fixed bottom-4 right-4 btn bg-green-600 hover:bg-green-700">🛒</button>
-    <script src="/service-worker.js"></script>
-    <script>
-        const products = [
-            { id: 1, name: 'تمپر قهوه استیل ۵۸.۴mm', price: 890000, stock: 5, shipping: 'تا ۲ روز کاری', desc: 'طراحی حرفه‌ای، ضد زنگ، مناسب اسپرسوسازهای صنعتی', rating: '⭐⭐⭐⭐⭐', votes: 15, image: '/assets/images/vendor-armoon-1.jpg', category: 'tamper' },
-            { id: 2, name: 'پاد تمپر سیلیکونی', price: 490000, stock: 8, shipping: '۱ روز کاری', desc: 'ضد لغزش، مقاوم در برابر حرارت بالا', rating: '⭐⭐⭐⭐☆', votes: 10, image: '/assets/images/vendor-armoon-2.jpg', category: 'tamper' },
-            { id: 3, name: 'فرچه اسپرسو مخزن‌دار', price: 250000, originalPrice: 300000, stock: 10, shipping: '۲ روز کاری', desc: 'مخزن شوینده دار، برس نرم، دسته ضد لغزش', rating: '⭐⭐⭐⭐☆', votes: 8, image: '/assets/images/vendor-armoon-3.jpg', category: 'cleaning' },
-            { id: 4, name: 'استند تمپر چوبی', price: 320000, stock: 3, shipping: '۱ تا ۲ روز کاری', desc: 'طراحی کلاسیک، نگهدارنده ایمن تمپر', rating: '⭐⭐⭐⭐⭐', votes: 12, image: '/assets/images/vendor-armoon-4.jpg', category: 'accessory' }
-        ];
-
-        let cart = [];
-        let compareList = [];
-
-        function formatPrice(price) {
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '٬') + ' تومان';
-        }
-
-        function showToast(message, type) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.remove('hidden', 'success', 'error');
-            toast.classList.add(type);
-            setTimeout(() => toast.classList.add('hidden'), 3000);
-        }
-
-        function renderProducts(productArray, filters = {}) {
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '<div class="skeleton-card"></div>'.repeat(4);
-            setTimeout(() => {
-                const filteredProducts = productArray.filter(p => {
-                    const matchesPrice = p.price <= (filters.price || 1000000);
-                    const matchesCategory = filters.category === 'all' || p.category === filters.category;
-                    const matchesSearch = !filters.search || p.name.toLowerCase().includes(filters.search.toLowerCase()) || p.desc.toLowerCase().includes(filters.search.toLowerCase());
-                    return matchesPrice && matchesCategory && matchesSearch;
-                });
-                productList.innerHTML = '';
-                filteredProducts.forEach(product => {
-                    const card = document.createElement('div');
-                    card.className = 'card p-4 fade-in';
-                    card.innerHTML = `
-                        <div class="relative group">
-                            <img src="${product.image}" alt="${product.name}" loading="lazy" class="transition-transform duration-300 group-hover:scale-110">
-                        </div>
-                        <h2 class="text-lg font-semibold">${product.name}</h2>
-                        <ul>
-                            <li>قیمت: ${product.originalPrice ? `<span class="line-through">${formatPrice(product.originalPrice)}</span> ` : ''}${formatPrice(product.price)}</li>
-                            <li class="${product.stock <= 5 ? 'stock-low' : ''} ${product.stock <= 3 ? 'stock-critical' : ''}">موجودی: ${product.stock} عدد</li>
-                            <li>ارسال: ${product.shipping}</li>
-                            <li>توضیحات: ${product.desc}</li>
-                            <li>${product.rating} (${product.votes} رای)</li>
-                            <li><button class="btn mt-2 add-to-cart" data-id="${product.id}">درخواست خرید</button></li>
-                            <li><button class="btn mt-2 ml-2 add-to-compare" data-id="${product.id}">افزودن به مقایسه</button></li>
-                        </ul>
-                    `;
-                    productList.appendChild(card);
-                });
-
-                document.querySelectorAll('.add-to-cart').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const id = parseInt(button.dataset.id);
-                        const product = products.find(p => p.id === id);
-                        cart.push({ product_id: id, quantity: 1 });
-                        showToast('محصول به سبد خرید اضافه شد!', 'success');
-                        updateCart();
-                    });
-                });
-
-                document.querySelectorAll('.add-to-compare').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const id = parseInt(button.dataset.id);
-                        const product = products.find(p => p.id === id);
-                        if (compareList.find(item => item.id === id)) {
-                            showToast('این محصول قبلاً به لیست مقایسه اضافه شده است!', 'error');
-                        } else {
-                            compareList.push(product);
-                            updateCompareList();
-                            showToast('محصول به لیست مقایسه اضافه شد!', 'success');
-                        }
-                    });
-                });
-            }, 500);
-        }
-
-        function updateCart() {
-            const cartSummary = document.getElementById('cartSummary');
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            if (cart.length > 0) {
-                cartSummary.classList.remove('hidden');
-                cartItems.innerHTML = cart.map(item => {
-                    const product = products.find(p => p.id === item.product_id);
-                    return `
-                        <li class="flex justify-between py-2 border-b">
-                            <span>${product ? product.name : 'محصول'}</span>
-                            <div class="flex items-center gap-2">
-                                <span>${item.quantity}</span>
-                                <span>${formatPrice((product ? product.price : 0) * item.quantity)}</span>
-                            </div>
-                        </li>
-                    `;
-                }).join('');
-                const total = cart.reduce((sum, item) => {
-                    const product = products.find(p => p.id === item.product_id);
-                    return sum + (product ? product.price * item.quantity : 0);
-                }, 0);
-                cartTotal.textContent = formatPrice(total);
-            } else {
-                cartSummary.classList.add('hidden');
-            }
-        }
-
-        function updateCompareList() {
-            const compareListElement = document.getElementById('compareList').querySelector('tbody');
-            compareListElement.innerHTML = compareList.map(item => `
-                <tr>
-                    <td class="p-2">${item.name}</td>
-                    <td class="p-2">${formatPrice(item.price)}</td>
-                    <td class="p-2">${item.shipping}</td>
-                    <td class="p-2">${item.stock}</td>
-                    <td class="p-2"><button class="btn bg-red-500 hover:bg-red-600 remove-compare" data-id="${item.id}">حذف</button></td>
-                </tr>
-            `).join('');
-            document.getElementById('compareModal').classList.remove('hidden');
-
-            document.querySelectorAll('.remove-compare').forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = parseInt(button.dataset.id);
-                    compareList = compareList.filter(item => item.id !== id);
-                    updateCompareList();
-                });
-            });
-        }
-
-        function renderRelatedProducts() {
-            const relatedProducts = document.getElementById('relatedProducts');
-            const related = products.slice(0, 2);
-            relatedProducts.innerHTML = related.map(p => `
-                <div class="card p-4">
-                    <img src="${p.image}" alt="${p.name}" loading="lazy">
-                    <p>${p.name} - ${p.desc}</p>
-                    <p>${formatPrice(p.price)}</p>
-                    <button class="btn mt-2 add-to-cart" data-id="${p.id}">افزودن به سبد</button>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = parseInt(button.dataset.id);
-                    cart.push({ product_id: id, quantity: 1 });
-                    showToast('محصول به سبد خرید اضافه شد!', 'success');
-                    updateCart();
-                });
-            });
-        }
-
-        function sortProducts(criteria) {
-            let sortedProducts = [...products];
-            switch (criteria) {
-                case 'cheapest':
-                    sortedProducts.sort((a, b) => a.price - b.price);
-                    break;
-                case 'highest-rated':
-                    sortedProducts.sort((a, b) => b.votes - a.votes);
-                    break;
-                default:
-                    sortedProducts = [...products];
-            }
-            renderProducts(sortedProducts, {
-                price: parseInt(document.getElementById('priceRange').value),
-                category: document.getElementById('categoryFilter').value,
-                search: document.getElementById('searchInput').value
-            });
-        }
-
-        document.getElementById('sortSelect').addEventListener('change', (e) => {
-            sortProducts(e.target.value);
-        });
-
-        document.getElementById('categoryFilter').addEventListener('change', (e) => {
-            const filters = {
-                category: e.target.value,
-                price: parseInt(document.getElementById('priceRange').value),
-                search: document.getElementById('searchInput').value
-            };
-            renderProducts(products, filters);
-        });
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const filters = {
-                category: document.getElementById('categoryFilter').value,
-                price: parseInt(document.getElementById('priceRange').value),
-                search: e.target.value
-            };
-            renderProducts(products, filters);
-        });
-
-        document.getElementById('priceRange').addEventListener('input', (e) => {
-            const price = e.target.value;
-            document.getElementById('priceValue').textContent = `تا ${formatPrice(price)}`;
-            const filters = {
-                category: document.getElementById('categoryFilter').value,
-                price: price,
-                search: document.getElementById('searchInput').value
-            };
-            renderProducts(products, filters);
-        });
-
-        document.getElementById('priceRange').addEventListener('touchmove', () => {
-            const filters = {
-                category: document.getElementById('categoryFilter').value,
-                price: parseInt(document.getElementById('priceRange').value),
-                search: document.getElementById('searchInput').value
-            };
-            renderProducts(products, filters);
-        });
-
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('compareModal').classList.add('hidden');
-        });
-
-        document.getElementById('addToCompareSimilar').addEventListener('click', () => {
-            const similarProduct = { id: 5, name: 'پاد تمپر مشابه', price: 470000, shipping: '۳ روزه', stock: 0 };
-            if (compareList.find(item => item.id === similarProduct.id)) {
-                showToast('این محصول قبلاً به لیست مقایسه اضافه شده است!', 'error');
-            } else {
-                compareList.push(similarProduct);
-                updateCompareList();
-                showToast('محصول مشابه به لیست مقایسه اضافه شد!', 'success');
-            }
-        });
-
-        document.getElementById('checkoutBtn').addEventListener('click', () => {
-            showToast('در حال انتقال به صفحه پرداخت...', 'success');
-        });
-
-        document.getElementById('cartToggle').addEventListener('click', () => {
-            document.getElementById('cartSummary').classList.toggle('hidden');
-        });
-
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        });
-        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
-
-        renderProducts(products);
-        updateCart();
-        renderRelatedProducts();
-    </script>
-</body>
-</html>
