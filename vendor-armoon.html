@@ -129,34 +129,6 @@
                 <p>بله، تمام محصولات دارای ضمانت اصالت و سلامت فیزیکی هستند.</p>
             </div>
         </div>
-            <h2 class="text-xl font-semibold">محصولات مکمل پیشنهادی</h2>
-            <div id="relatedProducts" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="card p-4">
-                    <img src="/assets/images/related-1.jpg" alt="قلاب تمپر ضد زنگ" loading="lazy">
-                    <p>قلاب تمپر ضد زنگ</p>
-                    <p>۱۵۰٬۰۰۰ تومان</p>
-                    <button class="btn mt-2 add-to-cart" data-id="101">افزودن به سبد</button>
-                </div>
-                <div class="card p-4">
-                    <img src="/assets/images/related-2.jpg" alt="قاشق مدرج قهوه" loading="lazy">
-                    <p>قاشق مدرج قهوه</p>
-                    <p>۸۰٬۰۰۰ تومان</p>
-                    <button class="btn mt-2 add-to-cart" data-id="102">افزودن به سبد</button>
-                </div>
-                <div class="card p-4">
-                    <img src="/assets/images/related-3.jpg" alt="فرچه تمیزکاری فیلتر اسپرسو" loading="lazy">
-                    <p>فرچه تمیزکاری فیلتر اسپرسو</p>
-                    <p>۷۰٬۰۰۰ تومان</p>
-                    <button class="btn mt-2 add-to-cart" data-id="103">افزودن به سبد</button>
-                </div>
-                <div class="card p-4">
-                    <img src="/assets/images/related-4.jpg" alt="کف‌زن شیشه‌ای آمریکانو" loading="lazy">
-                    <p>کف‌زن شیشه‌ای آمریکانو</p>
-                    <p>۱۲۰٬۰۰۰ تومان</p>
-                    <button class="btn mt-2 add-to-cart" data-id="104">افزودن به سبد</button>
-                </div>
-            </div>
-        </div>
         <div id="cartSummary" class="fixed bottom-4 right-4 card p-4 hidden">
             <h2 class="text-xl font-semibold">سبد خرید</h2>
             <ul id="cartItems" class="mt-4"></ul>
@@ -325,26 +297,37 @@
         }
 
         function renderRelatedProducts() {
-            const relatedProducts = document.getElementById('relatedProducts');
-            const related = products.slice(0, 2);
-            relatedProducts.innerHTML = related.map(p => `
-                <div class="card p-4">
-                    <img src="${p.image}" alt="${p.name}" loading="lazy">
-                    <p>${p.name} - ${p.desc}</p>
-                    <p>${formatPrice(p.price)}</p>
-                    <button class="btn mt-2 add-to-cart" data-id="${p.id}">افزودن به سبد</button>
-                </div>
-            `).join('');
+    const relatedProducts = document.getElementById('relatedProducts');
 
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = parseInt(button.dataset.id);
-                    cart.push({ product_id: id, quantity: 1 });
-                    showToast('محصول به سبد خرید اضافه شد!', 'success');
-                    updateCart();
-                });
-            });
-        }
+    // ۴ محصول مکمل پیشنهادی
+    const relatedItems = [
+        { name: "قلاب تمپر ضد زنگ", price: 150000, image: "/assets/images/related-1.jpg" },
+        { name: "قاشق مدرج قهوه", price: 80000, image: "/assets/images/related-2.jpg" },
+        { name: "فرچه تمیزکاری فیلتر اسپرسو", price: 70000, image: "/assets/images/related-3.jpg" },
+        { name: "کف‌زن شیشه‌ای آمریکانو", price: 120000, image: "/assets/images/related-4.jpg" }
+    ];
+
+    relatedProducts.innerHTML = relatedItems.map(item => `
+        <div class="card p-4">
+            <img src="${item.image}" alt="${item.name}" loading="lazy" class="mb-2 w-full h-40 object-cover rounded">
+            <p class="font-semibold">${item.name}</p>
+            <p>${formatPrice(item.price)}</p>
+            <button class="btn mt-2 add-to-cart-suggested">افزودن به سبد</button>
+        </div>
+    `).join('');
+
+    // افزودن عملکرد دکمه‌ها
+    document.querySelectorAll('.add-to-cart-suggested').forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const item = relatedItems[index];
+            // چون این محصولات در آرایه `products` نیستند، یه ID موقت می‌ذاریم
+            const tempId = 100 + index;
+            cart.push({ product_id: tempId, quantity: 1 });
+            showToast(`"${item.name}" به سبد خرید اضافه شد!`, 'success');
+            updateCart();
+        });
+    });
+}
 
         function sortProducts(criteria) {
             let sortedProducts = [...products];
